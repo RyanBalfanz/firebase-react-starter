@@ -13,6 +13,13 @@ class App extends Component {
     };
   }
 
+  resetAuthForm() {
+    const txtEmail = document.getElementById('txtEmail');
+    const txtPassword = document.getElementById('txtPassword');
+    txtEmail.value = "";
+    txtPassword.value = "";
+  }
+
   componentDidMount() {
     const rootRef = firebase.database().ref().child('react');
     const speedRef = rootRef.child('speed');
@@ -34,7 +41,9 @@ class App extends Component {
         const auth = firebase.auth();
 
         const promise = auth.signInWithEmailAndPassword(email, pass);
-        promise.catch(e => console.log(e.message));
+        promise
+          .then(_ => this.resetAuthForm())
+          .catch(e => console.log(e.message));
     });
 
     btnSignup.addEventListener('click', e => {
@@ -43,7 +52,9 @@ class App extends Component {
       const auth = firebase.auth();
 
       const promise = auth.createUserWithEmailAndPassword(email, pass);
-      promise.catch(e => console.log(e.message));
+      promise
+        .then(_ => this.resetAuthForm())
+        .catch(e => console.log(e.message));
     });
 
     btnLogout.addEventListener('click', e => {
