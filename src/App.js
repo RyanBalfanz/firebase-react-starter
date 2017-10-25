@@ -56,6 +56,7 @@ class App extends Component {
         btnLogout.classList.remove('hide');
       } else {
         console.log('not logged in');
+        btnLogout.classList.add('hide');
       }
     });
   }
