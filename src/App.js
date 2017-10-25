@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 
+import * as firebase from 'firebase';
+
 class App extends Component {
 
   constructor() {
@@ -9,6 +11,16 @@ class App extends Component {
     this.state = {
       speed: 10
     };
+  }
+
+  componentDidMount() {
+    const rootRef = firebase.database().ref().child('react');
+    const speedRef = rootRef.child('speed');
+    speedRef.on('value', snapshot => {
+      this.setState({
+        speed: snapshot.val()
+      });
+    });
   }
 
   render() {
